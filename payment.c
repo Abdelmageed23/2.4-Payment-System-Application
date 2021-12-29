@@ -52,22 +52,15 @@ void gitCardData()
 }
 
 
-
-
 void gitTerminalData()
 {
     printf("Enter The Amount:\n");
     scanf("%f",&terminal.transAmount);
-    printf("\n\n\ntheeeeeeeeeeeeeeeeeeeeeeeenumbeeeeeeeeeeeeer is %f\n\n\n",terminal.transAmount);
     terminal.maxTransAmount=MaxTans;
     printf("Enter the Trans Date in format DD/MM/YYYY\n");
     scanf(" %s",&terminal.transactionDate);
 
 }
-
-
-
-
 
 uint8_t checkCardExpired()
 {
@@ -120,21 +113,21 @@ void Transaction()
 
     if (checkCardExpired()==0)
     {
-        printf("\nTransactionDeclined 1\n");
+        printf("\nTransactionDeclined , Card Expired\n");
 
     }
     else
     {
         if(Accptedamount()== 0)
         {
-            printf("\nTransactionDeclined 2");
+            printf("\nTransactionDeclined , Not accepted  Amount");
 
         }
         else
         {
             if(AccountNumberFound()==0)
             {
-                printf("\nTransactionDeclined 3");
+                printf("\nTransactionDeclined , Wrong Account Number");
 
             }
             else
@@ -146,10 +139,7 @@ void Transaction()
                 }
                 else
                 {
-                    printf("\nThe Transaction is Decline 4");
-                    printf("\nThe index is %d",indexserver);
-                    printf("\nThe server[indexserver].balance is %f",server[indexserver].balance);
-                    printf("\nThe terminal.transAmount is %f",terminal.transAmount);
+                    printf("\nThe Transaction is Decline , Out of balance");
 
                 }
                 }
@@ -158,7 +148,6 @@ void Transaction()
 
     printf("\nDo you want to continue (y/n)? : \n");
     scanf(" %c",&u8_again);
-    //getchar();
     indexserver= NULL;
     if(u8_again!='y') return 0;
     }
