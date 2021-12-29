@@ -3,6 +3,7 @@
 #include "typedef.h"
 #include "payment.h"
 
+#define historySize 5
 
 
 /****************Global Variables *********************/
@@ -10,8 +11,9 @@
   ST_terminalData_t terminal;
   ST_transaction transaction;
   ST_accountBalance_t account;
+  ST_transaction transactionHistory[historySize];
 uint8_t indexserver= NULL;
-
+uint8_t TransactionPointer =0;
 
   ST_accountBalance_t server[] ={
 		{ "123456789", 100.00},
@@ -32,6 +34,11 @@ void main()
 {
 
     Transaction();
+
+    for(int i=0;i<TransactionPointer;i++)
+    {
+        printf("\n%s",transactionHistory[i].cardHolderData.primaryAccountNumber);
+    }
 }
 
 
@@ -102,6 +109,15 @@ uint8_t AccountNumberFound()
     return 0;
 }
 
+
+void SaveTransaction()
+        {
+        transactionHistory[TransactionPointer].cardHolderData= card;
+        transactionHistory[TransactionPointer].termData= terminal;
+        transactionHistory[TransactionPointer].transStat=DECLINED;
+        TransactionPointer++;
+        }
+
 void Transaction()
 {
     uint8_t u8_again;
@@ -115,32 +131,78 @@ void Transaction()
     {
         printf("\nTransactionDeclined , Card Expired\n");
 
+        if(historySize>TransactionPointer)
+    {
+        SaveTransaction();
+
+    }
+    else
+    {
+        printf("\n\n  Memory Full!...");
+        return 0;
+    }
     }
     else
     {
         if(Accptedamount()== 0)
         {
             printf("\nTransactionDeclined , Not accepted  Amount");
+            if(historySize>TransactionPointer)
+    {
+        SaveTransaction();
 
+    }
+    else
+    {
+        printf("\n\n  Memory Full!...");
+        return 0;
+    }
         }
         else
         {
             if(AccountNumberFound()==0)
             {
                 printf("\nTransactionDeclined , Wrong Account Number");
+                        if(historySize>TransactionPointer)
+                {
+                    SaveTransaction();
 
+                }
+                else
+                {
+                    printf("\n\n  Memory Full!...");
+                    return 0;
+                }
             }
             else
                 {
                     if((server[indexserver].balance>terminal.transAmount))
                 {
                     printf("The Transaction is APPROVED");
+                    if(historySize>TransactionPointer)
+    {
+        SaveTransaction();
 
+    }
+    else
+    {
+        printf("\n\n  Memory Full!...");
+        return 0;
+    }
                 }
                 else
                 {
                     printf("\nThe Transaction is Decline , Out of balance");
 
+            if(historySize>TransactionPointer)
+    {
+        SaveTransaction();
+    }
+    else
+    {
+        printf("\n\n  Memory Full!...");
+        return 0;
+    }
                 }
                 }
         }
@@ -149,9 +211,11 @@ void Transaction()
     printf("\nDo you want to continue (y/n)? : \n");
     scanf(" %c",&u8_again);
     indexserver= NULL;
+
+
+
     if(u8_again!='y') return 0;
     }
-
 
 }
 

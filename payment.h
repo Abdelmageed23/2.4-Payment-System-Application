@@ -55,4 +55,5 @@ void gitTerminalData();
 uint8_t checkCardExpired();
 uint8_t Accptedamount();
 uint8_t AccountNumberFound();
+void SaveTransaction();
 void Transaction();
