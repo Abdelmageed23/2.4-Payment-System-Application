@@ -30,6 +30,45 @@ uint8_t TransactionPointer =0;
 
 
 
+
+
+void swap( ST_transaction *xp, ST_transaction *yp)
+{
+    ST_transaction u8_temp=*xp;
+            *xp=*yp;
+            *yp=u8_temp;
+}
+
+
+/*
+    BubbleSort function that arrange array of u32 in ascending order
+    Input: array of u32 , array size
+    Output: void
+*/
+void BubbleSort(ST_transaction *arr , uint8_t arr_size)
+{
+    uint8_t local_index;
+    uint16_t local_index2;
+    for(local_index=0;local_index<arr_size-1;local_index++)
+    {
+        for(local_index2=0;local_index2<arr_size-local_index-1;local_index2++)
+        {
+            if(strcmp(arr[local_index2].cardHolderData.primaryAccountNumber,arr[local_index2+1].cardHolderData.primaryAccountNumber)==1)
+            {
+                swap(&arr[local_index2],&arr[local_index2+1]);
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
 void main()
 {
 
@@ -37,6 +76,7 @@ void main()
     printf("\ntransaction History : ");
     for(int i=0;i<TransactionPointer;i++)
     {
+
         printf("\n %d: PIN number %s",i+1,transactionHistory[i].cardHolderData.primaryAccountNumber);
     }
 }
@@ -171,7 +211,7 @@ void Transaction()
         if(historySize>TransactionPointer)
     {
         SaveTransaction();
-
+        BubbleSort(transactionHistory,TransactionPointer);
     }
     else
     {
@@ -187,7 +227,7 @@ void Transaction()
             if(historySize>TransactionPointer)
     {
         SaveTransaction();
-
+        BubbleSort(transactionHistory,TransactionPointer);
     }
     else
     {
@@ -203,7 +243,7 @@ void Transaction()
                         if(historySize>TransactionPointer)
                 {
                     SaveTransaction();
-
+                    BubbleSort(transactionHistory,TransactionPointer);
                 }
                 else
                 {
@@ -219,7 +259,7 @@ void Transaction()
                     if(historySize>TransactionPointer)
     {
         SaveTransaction();
-
+        BubbleSort(transactionHistory,TransactionPointer);
     }
     else
     {
@@ -234,6 +274,7 @@ void Transaction()
             if(historySize>TransactionPointer)
     {
         SaveTransaction();
+        BubbleSort(transactionHistory,TransactionPointer);
     }
     else
     {
