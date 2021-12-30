@@ -14,6 +14,8 @@
 uint8_t indexserver= NULL;
 uint8_t TransactionPointer =0;
 
+
+
 /*
     Server is the data base of the bank holds ID number and balance
 */
@@ -132,23 +134,6 @@ uint8_t AccountNumberFound()
 
 
 /*
-    function save transaction history
-    saved data:
-        card saved data : Card holder Data
-                        : Terminal Data
-                        : Transaction State
-*/
-
-void SaveTransaction()
-        {
-        transactionHistory[TransactionPointer].cardHolderData= card;
-        transactionHistory[TransactionPointer].termData= terminal;
-        transactionHistory[TransactionPointer].transStat=DECLINED;
-        TransactionPointer++;
-        }
-
-
-/*
     function of transaction return void
     while loop function based on memory server (#define historySize) or when ends the Transaction
         get card data and terminal data
@@ -171,7 +156,12 @@ void Transaction()
 
         if(historySize>TransactionPointer)
     {
-        SaveTransaction();
+
+        transactionHistory[TransactionPointer].cardHolderData= card;
+        transactionHistory[TransactionPointer].termData= terminal;
+        transactionHistory[TransactionPointer].transStat=DECLINED;
+        TransactionPointer++;
+      //  SaveTransaction();
         BubbleSort(transactionHistory,TransactionPointer);
     }
     else
@@ -187,7 +177,12 @@ void Transaction()
             printf("\nTransactionDeclined , Not accepted  Amount");
             if(historySize>TransactionPointer)
     {
-        SaveTransaction();
+        transactionHistory[TransactionPointer].cardHolderData= card;
+        transactionHistory[TransactionPointer].termData= terminal;
+        transactionHistory[TransactionPointer].transStat=DECLINED;
+        TransactionPointer++;
+
+      //  SaveTransaction();
         BubbleSort(transactionHistory,TransactionPointer);
     }
     else
@@ -203,7 +198,12 @@ void Transaction()
                 printf("\nTransactionDeclined , Wrong Account Number");
                         if(historySize>TransactionPointer)
                 {
-                    SaveTransaction();
+
+                    transactionHistory[TransactionPointer].cardHolderData= card;
+                    transactionHistory[TransactionPointer].termData= terminal;
+                    transactionHistory[TransactionPointer].transStat=DECLINED;
+                    TransactionPointer++;
+                   // SaveTransaction();
                     BubbleSort(transactionHistory,TransactionPointer);
                 }
                 else
@@ -219,7 +219,12 @@ void Transaction()
                     printf("The Transaction is APPROVED");
                     if(historySize>TransactionPointer)
     {
-        SaveTransaction();
+
+        transactionHistory[TransactionPointer].cardHolderData= card;
+        transactionHistory[TransactionPointer].termData= terminal;
+        transactionHistory[TransactionPointer].transStat=APPROVED;
+        TransactionPointer++;
+      //  SaveTransaction();
         BubbleSort(transactionHistory,TransactionPointer);
     }
     else
@@ -234,7 +239,11 @@ void Transaction()
 
             if(historySize>TransactionPointer)
     {
-        SaveTransaction();
+        transactionHistory[TransactionPointer].cardHolderData= card;
+        transactionHistory[TransactionPointer].termData= terminal;
+        transactionHistory[TransactionPointer].transStat=DECLINED;
+        TransactionPointer++;
+      //  SaveTransaction();
         BubbleSort(transactionHistory,TransactionPointer);
     }
     else
