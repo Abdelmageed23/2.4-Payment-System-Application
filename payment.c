@@ -3,7 +3,7 @@
 #include "typedef.h"
 #include "payment.h"
 
-#define historySize 5
+
 
 
 /****************Global Variables *********************/
@@ -34,19 +34,21 @@ void main()
 {
 
     Transaction();
-
+    printf("\ntransaction History : ");
     for(int i=0;i<TransactionPointer;i++)
     {
-        printf("\n%s",transactionHistory[i].cardHolderData.primaryAccountNumber);
+        printf("\n %d: PIN number %s",i+1,transactionHistory[i].cardHolderData.primaryAccountNumber);
     }
 }
 
 
-
+/*
+    function asks for card data and return void
+    saving card name , number , expired date in the card structure
+*/
 
 void gitCardData()
 {
-
     printf("Enter name written on the card\n");
     fflush(stdout);
     scanf("%s",&card.cardHolderName);
@@ -59,6 +61,10 @@ void gitCardData()
 }
 
 
+/*
+    function asks for terminal data and return void
+    saving the terminal amount and adjust the max amount and save the transaction date
+*/
 void gitTerminalData()
 {
     printf("Enter The Amount:\n");
@@ -68,6 +74,11 @@ void gitTerminalData()
     scanf(" %s",&terminal.transactionDate);
 
 }
+
+/*
+    function to check if the card expired or not and return 1 if not expired and 0 if expired
+    by comparing the card expired date and transaction date
+*/
 
 uint8_t checkCardExpired()
 {
@@ -87,12 +98,21 @@ uint8_t checkCardExpired()
         return 0;
     }
 }
+
+
+/*
+    function compare the amount of transaction and compare it with the max amount and return 1 if accepted and 0 if not accepted
+*/
 uint8_t Accptedamount()
 {
     if(terminal.transAmount<=terminal.maxTransAmount) return 1;
     else return 0;
 }
 
+
+/*
+    function search for the account number in the server and return 1 if found and 0 if not found
+*/
 uint8_t AccountNumberFound()
 {
     for(int i=0;i<10;i++)
@@ -110,6 +130,14 @@ uint8_t AccountNumberFound()
 }
 
 
+/*
+    function save transaction history
+    saved data:
+        card saved data : Card holder Data
+                        : Terminal Data
+                        : Transaction State
+*/
+
 void SaveTransaction()
         {
         transactionHistory[TransactionPointer].cardHolderData= card;
@@ -118,6 +146,15 @@ void SaveTransaction()
         TransactionPointer++;
         }
 
+
+/*
+    function of transaction return void
+    while loop function based on memory server (#define historySize) or when ends the Transaction
+        get card data and terminal data
+        check the card data and terminal data if valid or not
+
+
+*/
 void Transaction()
 {
     uint8_t u8_again;

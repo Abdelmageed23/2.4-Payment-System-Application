@@ -1,6 +1,8 @@
 
-
 #define MaxTans 5000.0
+#define historySize 5
+
+/*********************************Typedefs************************/
 /**********CARD Data *************/
 
 typedef struct ST_cardData_t
@@ -49,7 +51,7 @@ typedef struct ST_accountBalance_t
 }ST_accountBalance_t;
 
 
-/*********************Function prototype************************/
+/*********************Function Declaration ************************/
 void gitCardData();
 void gitTerminalData();
 uint8_t checkCardExpired();
