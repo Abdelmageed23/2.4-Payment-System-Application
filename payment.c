@@ -7,14 +7,16 @@
 
 
 /****************Global Variables *********************/
-  ST_cardData_t card;
-  ST_terminalData_t terminal;
-  ST_transaction transaction;
-  ST_accountBalance_t account;
-  ST_transaction transactionHistory[historySize];
+  ST_cardData_t card;           //card is a global variable of structure to hold card data
+  ST_terminalData_t terminal;   //terminal is a global variable of structure to hold terminal data
+  ST_transaction transaction;   //transaction is a global variable of structure to save transaction data
+  ST_transaction transactionHistory[historySize]; // transactionHistory is a global array of structure to save transactions on it
 uint8_t indexserver= NULL;
 uint8_t TransactionPointer =0;
 
+/*
+    Server is the data base of the bank holds ID number and balance
+*/
   ST_accountBalance_t server[] ={
 		{ "123456789", 100.00},
 		{ "234567891", 6000.00},
@@ -27,47 +29,6 @@ uint8_t TransactionPointer =0;
 		{ "123123456", 10.12},
 		{ "456789321", 0.55},
 };
-
-
-
-
-
-void swap( ST_transaction *xp, ST_transaction *yp)
-{
-    ST_transaction u8_temp=*xp;
-            *xp=*yp;
-            *yp=u8_temp;
-}
-
-
-/*
-    BubbleSort function that arrange array of u32 in ascending order
-    Input: array of u32 , array size
-    Output: void
-*/
-void BubbleSort(ST_transaction *arr , uint8_t arr_size)
-{
-    uint8_t local_index;
-    uint16_t local_index2;
-    for(local_index=0;local_index<arr_size-1;local_index++)
-    {
-        for(local_index2=0;local_index2<arr_size-local_index-1;local_index2++)
-        {
-            if(strcmp(arr[local_index2].cardHolderData.primaryAccountNumber,arr[local_index2+1].cardHolderData.primaryAccountNumber)==1)
-            {
-                swap(&arr[local_index2],&arr[local_index2+1]);
-            }
-        }
-    }
-}
-
-
-
-
-
-
-
-
 
 void main()
 {
@@ -297,6 +258,38 @@ void Transaction()
 
 }
 
+/*
+swap function takes 2 structures  and swap them
+*/
 
+
+void swap( ST_transaction *xp, ST_transaction *yp)
+{
+    ST_transaction u8_temp=*xp;
+            *xp=*yp;
+            *yp=u8_temp;
+}
+
+
+/*
+    BubbleSort function that arrange array of struct  in ascending order
+    Input: array of stuct  , array size
+    Output: void
+*/
+void BubbleSort(ST_transaction *arr , uint8_t arr_size)
+{
+    uint8_t local_index;
+    uint16_t local_index2;
+    for(local_index=0;local_index<arr_size-1;local_index++)
+    {
+        for(local_index2=0;local_index2<arr_size-local_index-1;local_index2++)
+        {
+            if(strcmp(arr[local_index2].cardHolderData.primaryAccountNumber,arr[local_index2+1].cardHolderData.primaryAccountNumber)==1)
+            {
+                swap(&arr[local_index2],&arr[local_index2+1]);
+            }
+        }
+    }
+}
 
 
